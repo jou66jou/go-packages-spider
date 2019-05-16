@@ -10,6 +10,44 @@ import (
 	"github.com/PuerkitoBio/goquery"
 )
 
+func SpiderGopkgs(url string) {
+	if !db.HasTable(&Gopkg{}) {
+		fmt.Println("Models: not found Gopkgs table in db and create a new table")
+	} else {
+		db.DropTable(&Gopkg{})
+		fmt.Println("Models: delete and create a new Gopkgs table")
+	}
+	if !db.HasTable(&Gopkg_ov{}) {
+		fmt.Println("Models: not found Gopkg_ovs table in db and create a new table")
+	} else {
+		db.DropTable(&Gopkg_ov{})
+		fmt.Println("Models: delete and create a new Gopkg_ovs table")
+	}
+	db.CreateTable(&Gopkg{})
+	db.CreateTable(&Gopkg_ov{})
+	data, getE := GetGopkgsList(url) // get golang pkgs standard lib description list
+	if getE != nil {
+		fmt.Println(getE)
+		return
+	}
+	fmt.Println("Main: get gopkgslist success")
+
+	insertDataE := InsertPkgData(data) // insert pkgs list to db
+	if insertDataE != nil {
+		fmt.Println(insertDataE)
+		return
+	}
+	fmt.Println("Main: gopkgslist insert to db success")
+
+	insertOverViewE := GetOVAndInsert() // routine get pkgs overview and insert to db
+
+	if insertOverViewE != nil {
+		fmt.Println(getE)
+		return
+	}
+	fmt.Println("Main: pkgs overview insert to db success")
+}
+
 // GetGopkgsList parses a url and returns golang pkgs elements against
 // a Gopkg Object (ex: tier,reffer,pkgNme ... some pkg's description and relationship).
 func GetGopkgsList(url string) (GopkgTable []*Gopkg, getE error) {

@@ -1,0 +1,19 @@
+syntax = "proto3";
+
+package echo;
+
+service EchoPkg {
+    rpc EchoPkg (GOPkgRequest) returns(GOPkgReply){}
+}
+
+//定義 EchoPkg Request
+message GOPkgRequest {
+    string pkg_name = 1;
+}
+
+//定義 EchoPkg Response
+message GOPkgReply {
+    string pkg_name = 1;
+    string url = 2;
+    string overview = 3;
+}
