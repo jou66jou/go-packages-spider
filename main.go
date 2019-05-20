@@ -3,18 +3,25 @@ package main
 import (
 	"fmt"
 	"gopkgSpider/models"
+	"gopkgSpider/protoserver"
 	"gopkgSpider/routers"
 	"log"
 	"net/http"
 )
 
 func main() {
-	url := "https://golang.google.cn/pkg/"
-	fmt.Println("Main: url set-" + url)
-
+	var port string = "8080"
+	fmt.Println("Http listen port (default 8080):")
+	fmt.Scanln(&port)
 	// run spider gopkgs and insert to mysql
-	models.SpiderGopkgs(url)
+	fmt.Println("run spider gopkgs...")
+	models.SpiderGopkgs()
+
+	// starts an gRPC service and return server done.
+	go protoserver.Start_gRPC()
 
 	// starts an api service with a given routers.
-	log.Fatal(http.ListenAndServe(":8081", routers.Routers()))
+	fmt.Println("HTTP Listening on " + port + "...")
+	log.Fatal(http.ListenAndServe(":"+port, routers.Routers()))
+
 }

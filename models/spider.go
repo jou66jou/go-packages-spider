@@ -10,18 +10,20 @@ import (
 	"github.com/PuerkitoBio/goquery"
 )
 
-func SpiderGopkgs(url string) {
+func SpiderGopkgs() {
+	url := "https://golang.google.cn/pkg/"
+	fmt.Println("Main: url set-" + url)
 	if !db.HasTable(&Gopkg{}) {
-		fmt.Println("Models: not found Gopkgs table in db and create a new table")
+		fmt.Println("db: not found Gopkgs table in db and create a new table")
 	} else {
 		db.DropTable(&Gopkg{})
-		fmt.Println("Models: delete and create a new Gopkgs table")
+		fmt.Println("db: delete and create a new Gopkgs table")
 	}
 	if !db.HasTable(&Gopkg_ov{}) {
-		fmt.Println("Models: not found Gopkg_ovs table in db and create a new table")
+		fmt.Println("db: not found Gopkg_ovs table in db and create a new table")
 	} else {
 		db.DropTable(&Gopkg_ov{})
-		fmt.Println("Models: delete and create a new Gopkg_ovs table")
+		fmt.Println("db: delete and create a new Gopkg_ovs table")
 	}
 	db.CreateTable(&Gopkg{})
 	db.CreateTable(&Gopkg_ov{})

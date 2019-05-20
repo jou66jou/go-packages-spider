@@ -2,33 +2,47 @@ package routers
 
 import (
 	"fmt"
-	"gopkgSpider/models"
+	"gopkgSpider/auth"
+	"gopkgSpider/controllers"
 	"net/http"
 
 	"github.com/gorilla/mux"
 )
 
-func Routers() *mux.Router {
-	router := mux.NewRouter().StrictSlash(true)
-	router.HandleFunc("/api/gopkg/{name}", GetGopkg).Methods("GET")
-
-	return router
+type Route struct {
+	Method     string
+	Pattern    string
+	Handler    http.HandlerFunc
+	Middleware mux.MiddlewareFunc
 }
 
-// GET - /api/gopkg/{name}, reponse go package content form grpc service.
-func GetGopkg(w http.ResponseWriter, r *http.Request) {
-	w.Header().Set("Content-Type", "application/json;charset=UTF-8")
-	switch r.Method {
-	case "GET":
-		vars := mux.Vars(r)
-		name := vars["name"]
-		jPkg := models.RequestToPB(name)
-		fmt.Println(jPkg)
-		fmt.Fprintf(w, jPkg)
+var routes []Route
 
-	case "POST":
-		fmt.Fprintf(w, "please sending Go package name as name key by get.")
-	default:
-		fmt.Fprintf(w, "Sorry, only GET and POST methods are supported.")
+func init() {
+	fmt.Println("HTTP Method list:")
+	fmt.Println("GET method : /api/gopkg/{name} - call the api whit JWT authorization to get go package description")
+	register("GET", "/api/gopkg/{name}", controllers.GetGopkg, auth.TokenMiddleware)
+	fmt.Println("POST method : /user/login - post json{username:\"test\"} to get JWT authorization, the auth time out after 2 hours")
+	register("POST", "/user/login", controllers.Login, nil)
+	fmt.Println("")
+
+}
+
+func Routers() *mux.Router {
+	router := mux.NewRouter()
+	for _, route := range routes {
+		r := router.Methods(route.Method).
+			Path(route.Pattern)
+		if route.Middleware != nil { // JWT valid
+			r.Handler(route.Middleware(route.Handler))
+		} else {
+			r.Handler(route.Handler)
+		}
 	}
+	return router
+
+}
+
+func register(method, pattern string, handler http.HandlerFunc, middleware mux.MiddlewareFunc) {
+	routes = append(routes, Route{method, pattern, handler, middleware})
 }

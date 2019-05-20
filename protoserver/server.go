@@ -1,6 +1,7 @@
-package main
+package protoserver
 
 import (
+	"fmt"
 	"log"
 	"net"
 
@@ -26,7 +27,7 @@ func (e *EchoPkg) EchoPkg(ctx context.Context, req *pb.GOPkgRequest) (resp *pb.G
 
 }
 
-func main() {
+func Start_gRPC() {
 	apiListener, err := net.Listen("tcp", ":9999")
 	if err != nil {
 		log.Println(err)
@@ -37,12 +38,9 @@ func main() {
 	es := &EchoPkg{}
 
 	grpc := grpc.NewServer()
-	//pb.Re(grpc, es)
 	pb.RegisterEchoPkgServer(grpc, es)
-
 	reflection.Register(grpc)
-	if err := grpc.Serve(apiListener); err != nil {
-		log.Fatal(" grpc.Serve Error: ", err)
-		return
-	}
+	fmt.Println("gRPC Listening on 9999...")
+	grpc.Serve(apiListener)
+
 }

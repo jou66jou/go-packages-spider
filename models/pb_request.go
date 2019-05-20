@@ -23,6 +23,5 @@ func RequestToPB(name string) string {
 		fmt.Printf("無法執行 Plus 函式：%v \n", err)
 	}
 	jFmt, _ := json.Marshal(r)
-	fmt.Printf(string(jFmt))
 	return string(jFmt)
 }
