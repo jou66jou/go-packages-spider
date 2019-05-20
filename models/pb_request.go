@@ -4,7 +4,7 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
-	pb "gopkgSpider/protoserver/echospec"
+	pb "gopkg-spider/protoserver/echospec"
 
 	"google.golang.org/grpc"
 )

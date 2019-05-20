@@ -4,7 +4,7 @@ package models
 
 import (
 	"fmt"
-	"gopkgspider/pkg/setting"
+	"gopkg-spider/pkg/setting"
 
 	"github.com/jinzhu/gorm"
 	_ "github.com/jinzhu/gorm/dialects/mysql"

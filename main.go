@@ -2,9 +2,9 @@ package main
 
 import (
 	"fmt"
-	"gopkgSpider/models"
-	"gopkgSpider/protoserver"
-	"gopkgSpider/routers"
+	"gopkg-spider/models"
+	"gopkg-spider/protoserver"
+	"gopkg-spider/routers"
 	"log"
 	"net/http"
 )

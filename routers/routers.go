@@ -2,8 +2,8 @@ package routers
 
 import (
 	"fmt"
-	"gopkgSpider/auth"
-	"gopkgSpider/controllers"
+	"gopkg-spider/auth"
+	"gopkg-spider/controllers"
 	"net/http"
 
 	"github.com/gorilla/mux"

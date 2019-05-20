@@ -3,9 +3,9 @@ package controllers
 import (
 	"encoding/json"
 	"fmt"
-	"gopkgSpider/auth"
-	"gopkgSpider/helper"
-	"gopkgSpider/models"
+	"gopkg-spider/auth"
+	"gopkg-spider/helper"
+	"gopkg-spider/models"
 	"net/http"
 )
 

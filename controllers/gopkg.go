@@ -2,7 +2,7 @@ package controllers
 
 import (
 	"fmt"
-	"gopkgSpider/models"
+	"gopkg-spider/models"
 	"net/http"
 
 	"github.com/gorilla/mux"

@@ -5,8 +5,8 @@ import (
 	"log"
 	"net"
 
-	md "gopkgSpider/models"
-	pb "gopkgSpider/protoserver/echospec"
+	md "gopkg-spider/models"
+	pb "gopkg-spider/protoserver/echospec"
 
 	context "golang.org/x/net/context"
 	"google.golang.org/grpc"

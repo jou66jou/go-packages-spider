@@ -2,9 +2,9 @@ package auth
 
 import (
 	"fmt"
-	"gopkgSpider/helper"
-	"gopkgSpider/models"
-	"gopkgspider/pkg/setting"
+	"gopkg-spider/helper"
+	"gopkg-spider/models"
+	"gopkg-spider/pkg/setting"
 	"net/http"
 	"time"
 
