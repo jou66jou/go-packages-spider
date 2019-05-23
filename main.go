@@ -12,7 +12,7 @@ import (
 func main() {
 	var port string = "8080"
 	fmt.Println("Http listen port (default 8080):")
-	fmt.Scanln(&port)
+	models.SwitchScanf(&port)
 	// run spider gopkgs and insert to mysql
 	fmt.Println("run spider gopkgs...")
 	models.SpiderGopkgs()

@@ -24,6 +24,8 @@ func init() {
 	register("GET", "/api/gopkg/{name}", controllers.GetGopkg, auth.TokenMiddleware)
 	fmt.Println("POST method : /user/login - post json{username:\"test\"} to get JWT authorization, the auth time out after 2 hours")
 	register("POST", "/user/login", controllers.Login, nil)
+	// fmt.Println("GET method : /api/gopkg/ - call the api whit JWT authorization to get all go package description and response by webscoket")
+	// register("GET", "/api/gopkg", controllers.GetGopkgAll, nil)
 	fmt.Println("")
 
 }

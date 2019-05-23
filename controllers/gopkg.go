@@ -6,10 +6,22 @@ import (
 	"net/http"
 
 	"github.com/gorilla/mux"
+	"github.com/gorilla/websocket"
 )
 
-// GET - /api/gopkg/{name}, reponse go package content form grpc service.
+// GET - /api/gopkg/, reponse all go package content form grpc service.
 func GetGopkg(w http.ResponseWriter, r *http.Request) {
+	c, err := websocket.Upgrade(w, r, w.Header(), 1024, 1024)
+	if err != nil {
+		http.Error(w, "Could not open websocket connection", http.StatusBadRequest)
+	}
+	go func(c *websocket.Conn) {
+
+	}(c)
+}
+
+// GET - /api/gopkg/{name}, reponse go package content form grpc service.
+func GetGopkgAll(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json;charset=UTF-8")
 	switch r.Method {
 	case "GET":
